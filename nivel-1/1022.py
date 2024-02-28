@@ -20,36 +20,48 @@ A saída consiste em um valor racional, seguido de um sinal de igualdade e outro
 
 qnt = int(input())
 
-
-
 Num1, frc, Dum1, op, Num2, frc, Dum2 = input().split() #Utilizar op como a operação a ser efetuada
 
 N1, D1, N2, D2 """
 
+
+# 42 linhas
+
 from fractions import Fraction
-
-N1, D1, N2, D2, op = None,None,None,None,''
-som, sub, mult, div = None,None,None,None
-ResN, ResD1 = None,None 
-
-s1, s2 = 4926324118003563, 4503599627370496
 
 def recolher_numeros_e_operacao(stri):
     global N1, D1, N2, D2, op
     el = stri.split()
     N1 = int(el[0]); D1 = int(el[2]); N2 = int(el[4]); D2 = int(el[6]); op = el[3]
 
+def alocar_resultados_iniciais(n1, n2):
+    global resultados
+    resultados.extend([n1, n2])
+
 def somar(Nu1, De1, Nu2, De2):
-    str(Nu1*De2 + Nu2*De1); str(De1*De2)
-    return (Nu1*De2 + Nu2*De1) / (De1*De2)
+    alocar_resultados_iniciais(str(Nu1*De2 + Nu2*De1), str(De1*De2))
+    return Fraction((Nu1*De2 + Nu2*De1) / (De1*De2)).limit_denominator(10000)
 
-lista = input()
+def subtrair(Nu1, De1, Nu2, De2):
+    alocar_resultados_iniciais(str(Nu1*De2 - Nu2*De1), str(De1*De2))
+    return Fraction((Nu1*De2 - Nu2*De1) / (De1*De2)).limit_denominator(10000)
 
-recolher_numeros_e_operacao(lista)
+def multiplicar(Nu1, De1, Nu2, De2):
+    alocar_resultados_iniciais(str(Nu1*Nu2), str((De1*De2)))
+    return Fraction(((Nu1*Nu2) / (De1*De2))).limit_denominator(10000)
 
-som = str(Fraction(somar(N1, D1, N2, D2)))
+def dividir(Nu1, De1, Nu2, De2):
+    alocar_resultados_iniciais(str(Nu1*De2), str(Nu2*De1))
+    return Fraction((Nu1*De2) / (Nu2*De1)).limit_denominator(10000)
 
-print()
+N1, D1, N2, D2, op, resultados = None,None,None,None,'', []
+#qnt = int(input())
+texto = input()
+
+recolher_numeros_e_operacao(texto)
+
+
+
 
 
 

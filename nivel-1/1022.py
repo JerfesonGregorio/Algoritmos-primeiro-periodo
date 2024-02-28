@@ -29,41 +29,48 @@ N1, D1, N2, D2 """
 
 from fractions import Fraction
 
+def alocar_resultados(n1, n2):
+    global resultados, res
+    resultados = n1 + '/' + n2 + ' = ' + str(res) + '\n' # utilizar .join() =>  resultados = ''.join([n1, '/', n2, '=', str(res), '\n'])
+    
+def somar(Nu1, De1, Nu2, De2):
+    alocar_resultados(str(Nu1*De2 + Nu2*De1), str(De1*De2))
+    return Fraction((Nu1*De2 + Nu2*De1) / (De1*De2)).limit_denominator(10000)
+
+def subtrair(Nu1, De1, Nu2, De2):
+    alocar_resultados(str(Nu1*De2 - Nu2*De1), str(De1*De2))
+    return Fraction((Nu1*De2 - Nu2*De1) / (De1*De2)).limit_denominator(10000)
+
+def multiplicar(Nu1, De1, Nu2, De2):
+    alocar_resultados(str(Nu1*Nu2), str((De1*De2)))
+    return Fraction(((Nu1*Nu2) / (De1*De2))).limit_denominator(10000)
+
+def dividir(Nu1, De1, Nu2, De2):
+    alocar_resultados(str(Nu1*De2), str(Nu2*De1))
+    return Fraction((Nu1*De2) / (Nu2*De1)).limit_denominator(10000)
+
+def efetuar_conta(op):
+    global N1, D1, N2, D2, res
+    if op == '+':
+        res = somar(N1, D1, N2, D2)
+    elif op == '-':
+        res = subtrair(N1, D1, N2, D2)
+    elif op == '*':
+        res = multiplicar(N1, D1, N2, D2)
+    else:
+        res = dividir(N1, D1, N2, D2)
+
 def recolher_numeros_e_operacao(stri):
     global N1, D1, N2, D2, op
     el = stri.split()
     N1 = int(el[0]); D1 = int(el[2]); N2 = int(el[4]); D2 = int(el[6]); op = el[3]
+    efetuar_conta(op)
 
-def alocar_resultados_iniciais(n1, n2):
-    global resultados
-    resultados.extend([n1, n2])
+N1, D1, N2, D2, res, op, resultados = 0, 0, 0, 0, 0, '', []
+qnt = int(input())
 
-def somar(Nu1, De1, Nu2, De2):
-    alocar_resultados_iniciais(str(Nu1*De2 + Nu2*De1), str(De1*De2))
-    return Fraction((Nu1*De2 + Nu2*De1) / (De1*De2)).limit_denominator(10000)
+for i in range(qnt):
+    texto = str(input())
+    recolher_numeros_e_operacao(texto)
 
-def subtrair(Nu1, De1, Nu2, De2):
-    alocar_resultados_iniciais(str(Nu1*De2 - Nu2*De1), str(De1*De2))
-    return Fraction((Nu1*De2 - Nu2*De1) / (De1*De2)).limit_denominator(10000)
-
-def multiplicar(Nu1, De1, Nu2, De2):
-    alocar_resultados_iniciais(str(Nu1*Nu2), str((De1*De2)))
-    return Fraction(((Nu1*Nu2) / (De1*De2))).limit_denominator(10000)
-
-def dividir(Nu1, De1, Nu2, De2):
-    alocar_resultados_iniciais(str(Nu1*De2), str(Nu2*De1))
-    return Fraction((Nu1*De2) / (Nu2*De1)).limit_denominator(10000)
-
-N1, D1, N2, D2, op, resultados = None,None,None,None,'', []
-#qnt = int(input())
-texto = input()
-
-recolher_numeros_e_operacao(texto)
-
-
-
-
-
-
-
-
+print(f'{resultados}')

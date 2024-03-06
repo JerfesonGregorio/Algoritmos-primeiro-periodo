@@ -14,8 +14,6 @@ vls2 = input().split()
 c1, n1, v1 = int(vls1[0]), int(vls1[1]), float(vls1[2])
 c2, n2, v2 = int(vls2[0]), int(vls2[1]), float(vls2[2])
 
+valor = (n1*v1) + (n2*v2)
 
-
-print() 
-
-
+print(f'VALOR A PAGAR: R$ {valor:.2f}')
